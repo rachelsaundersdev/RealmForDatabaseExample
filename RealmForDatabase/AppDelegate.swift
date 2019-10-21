@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,8 +15,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        let realm = try! Realm()
+        
+        let myFirstNote = Note()
+        myFirstNote.title = "My First Note"
+        myFirstNote.content = "This is my first note."
+        
+        do {
+            try realm.write {
+                       realm.add(myFirstNote)
+                   }
+        }catch{
+            print(error.localizedDescription)
+        }
+        
         return true
+        
     }
 
     // MARK: UISceneSession Lifecycle
