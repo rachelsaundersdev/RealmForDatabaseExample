@@ -30,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            print(error.localizedDescription)
 //        }
         
+        let lastTwoNotes = realm.objects(Note.self).filter("title CONTAINS '1.'")
+        
+        try! realm.write {
+            realm.delete(lastTwoNotes)
+        }
+        
         print(realm.objects(Note.self))
 
         let allMyNotes = realm.objects(Note.self)
