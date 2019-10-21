@@ -18,18 +18,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let realm = try! Realm()
         
-        let myFirstNote = Note()
-        myFirstNote.title = "My First Note"
-        myFirstNote.content = "This is my first note."
+//        let myFirstNote = Note()
+//        myFirstNote.title = "My First Note"
+//        myFirstNote.content = "This is my first note."
+//
+//        do {
+//            try realm.write {
+//                       realm.add(myFirstNote)
+//                   }
+//        }catch{
+//            print(error.localizedDescription)
+//        }
         
-        do {
-            try realm.write {
-                       realm.add(myFirstNote)
-                   }
-        }catch{
-            print(error.localizedDescription)
-        }
+        print(realm.objects(Note.self))
+
+        let allMyNotes = realm.objects(Note.self)
         
+        let filteredNotes = allMyNotes.filter("title CONTAINS '1.'")
+        
+        let moreComplexFilter = NSPredicate(format: "title CONTAINS %@ AND content CONTAINS %@", "My", "note")
+
+        let results = allMyNotes.filter(moreComplexFilter)
+
+
+        print(filteredNotes)
+        
+//        if let firstNote = allMyNotes.first {
+//            try! realm.write {
+//                firstNote.title = "My 1.Note"
+//            }
+//        }
+//
+//        for note in allMyNotes {
+//            print("Note title: \(note.title)" + "\n")
+//        }
+//
         return true
         
     }
